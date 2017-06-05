@@ -11,3 +11,4 @@ tsconfig.json
 .npmignore
 tools
 test
+CHANGELOG.md
