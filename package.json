@@ -33,12 +33,21 @@
     "@types/koa": "^2.0.39"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/supertest": "^2.0.2",
     "ava": "^0.21.0",
     "koa": "^2.3.0",
     "nyc": "^11.0.3",
     "shelljs": "^0.7.8",
     "standard-version": "^4.2.0",
+=======
+    "@types/supertest": "^2.0.0",
+    "ava": "^0.21.0",
+    "koa": "^2.2.0",
+    "nyc": "^11.0.3",
+    "shelljs": "^0.7.7",
+    "standard-version": "^4.0.0",
+>>>>>>> a47c2b89b493cf669591daea201f10f1c193a921
     "supertest": "^3.0.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.2"
