@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/HKUST-VISLab/koa-session-ts/compare/v0.0.7...v0.1.0) (2017-07-21)
+
+
+### Bug Fixes
+
+* fix conflict ([f59139c](https://github.com/HKUST-VISLab/koa-session-ts/commit/f59139c))
+* fix conflict ([95335b1](https://github.com/HKUST-VISLab/koa-session-ts/commit/95335b1))
+* fix missing script ([cd51d10](https://github.com/HKUST-VISLab/koa-session-ts/commit/cd51d10))
+* remove package-lock.json ([91ce560](https://github.com/HKUST-VISLab/koa-session-ts/commit/91ce560))
+
+
+### Features
+
+* add tslint as dev-dependency; update dependencise ([71922c9](https://github.com/HKUST-VISLab/koa-session-ts/commit/71922c9))
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/HKUST-VISLab/koa-session-ts/compare/v0.0.4...v0.0.7) (2017-06-05)
 
