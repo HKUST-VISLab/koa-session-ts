@@ -41,14 +41,6 @@ const AVAILABEL = 'AVAILABEL';
 const PENDING = 'PENDING';
 const UNAVAILABLE = 'UNAVAILABLE';
 
-// public permissions?: {
-//     [key: string]: {
-//         normal: boolean,
-//         superuser: boolean,
-//         administrator: boolean,
-//     },
-// };
-
 export interface SessionOptions {
     key?: string;
     store?: BaseStore;
@@ -112,7 +104,9 @@ function generateSession(cookieOptions: Cookie): Session {
 
 /**
  * setup session store with the given `options`
- * @param {Object} options
+ * 
+ * @export
+ * @param {SessionOptions} [options={}] 
  *   - [`key`] cookie name, defaulting to `koa.sid`
  *   - [`store`] session store instance, default is a MemoryStore
  *   - [`reconnectTimeout`] store reconnectTimeout in `ms`, default is oneday
@@ -122,9 +116,10 @@ function generateSession(cookieOptions: Cookie): Session {
  *   - [`rolling`]  rolling session, always reset the cookie and sessions, default is false
  *   - [`allowEmpty`] allow session empty, default is false
  *   - [`genSid`] you can use your own generator for sid
- *   - [`errorHanlder`] handler for session store get or set error
+ *   - [`errorHandler`] handler for session store get or set error
  *   - [`valid`] valid(ctx, session), valid session value before use it
  *   - [`beforeSave`] beforeSave(ctx, session), hook before save session
+ * @returns 
  */
 export default function session(options: SessionOptions = {}) {
     const key = options.key || 'koa.sid';
