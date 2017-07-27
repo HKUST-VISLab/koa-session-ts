@@ -2,6 +2,7 @@ koa-session-ts
 =================
 
 [![Build Status](https://travis-ci.org/HKUST-VISLab/koa-session-ts.svg?branch=master)](https://travis-ci.org/HKUST-VISLab/koa-session-ts)
+[![npm version](https://badge.fury.io/js/koa-session-ts.svg)](https://badge.fury.io/js/koa-session-ts)
 [![codecov](https://codecov.io/gh/HKUST-VISLab/koa-session-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/HKUST-VISLab/koa-session-ts)
 [![David](https://david-dm.org/HKUST-VISLab/koa-session-ts/status.svg)](https://github.com/HKUST-VISLab/koa-session-ts)
 [![Greenkeeper badge](https://badges.greenkeeper.io/HKUST-VISLab/koa-session-ts.svg)](https://greenkeeper.io/)
