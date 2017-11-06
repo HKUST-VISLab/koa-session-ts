@@ -10,6 +10,7 @@ declare module 'koa' {
         session: Session;
         sessionSave: boolean;
         regenerateSession: () => Session;
+        logger?: any;
     }
 }
 
@@ -393,7 +394,7 @@ export default function sessionFactory(options: SessionOptions = {}) {
         if (ctx.hasOwnProperty('session')) {
             return await next();
         }
-        const logger = ctx.logger || console;        
+        // const logger = ctx.logger || console;        
         let isNew: boolean = false;
         let originalHash = null;
         let touchSession: boolean = false;
