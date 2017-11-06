@@ -121,18 +121,20 @@ function generateSession(cookieOptions: Cookie): Session {
  *   - [`beforeSave`] beforeSave(ctx, session), hook before save session
  * @returns 
  */
-export default function session(options: SessionOptions = {}) {
-    const key = options.key || 'koa.sid';
-    const store = options.store || new MemoryStore(key);
-    const reconnectTimeout = options.reconnectTimeout || 10000;
-    const cookieOptions = options.cookieOptions || { signed: true };
-    const defer = options.defer || false;
-    const rolling = options.rolling || false;
-    const allowEmpty = options.allowEmpty || false;
-    const genSid = options.genSid || defaultGenSid;
-    const errorHandler = options.errorHandler || defaultErrorHanlder;
-    const valid = options.valid || (() => true);
-    const beforeSave = options.beforeSave || (() => undefined);
+export default function sessionFactory(options: SessionOptions = {}) {
+    const {
+        key = 'koa.sid',
+        store = new MemoryStore(key),
+        reconnectTimeout = 10000,
+        cookieOptions = {signed: true},
+        defer = false,
+        rolling = false,
+        allowEmpty = false,
+        genSid = defaultGenSid,
+        errorHandler = defaultErrorHanlder,
+        valid = () => true,
+        beforeSave = () => undefined,
+    } = options;
 
     let storeStatus = AVAILABEL;
     let waitStore = async () => Promise.resolve({});
@@ -183,6 +185,7 @@ export default function session(options: SessionOptions = {}) {
             ctx.sessionId = getSessionId(ctx, key, cookieOptions);
         }
 
+        const logger = ctx.logger || console;        
         let session: Session;
         let isNew = false;
         if (!ctx.sessionId) {
@@ -196,9 +199,9 @@ export default function session(options: SessionOptions = {}) {
                 session = await store.get(ctx.sessionId);
             } catch (err) {
                 if (err.code === 'ENOENT') {
-                    console.warn('get session error, code = ENOENT');
+                    logger.error('get session error, code = ENOENT');
                 } else {
-                    console.warn('get session error: ', err.message);
+                    logger.error('get session error: ', err.message);
                     errorHandler(err, 'get', ctx);
                 }
             }
@@ -230,27 +233,28 @@ export default function session(options: SessionOptions = {}) {
      *   if session is modified, update cookie and store
      */
     async function refreshSession(ctx: Context, session: Session, originalHash, isNew: boolean) {
-
+        const logger = ctx.logger || console;
+        
         // reject any session changes, and do not update session expiry
         if (ctx.sessionSave === false) {
-            console.warn('session save disabled');
+            logger.warn('session save disabled');
             return;
         }
 
         // delete session
         if (!session) {
             if (!isNew) {
-                console.warn('session set to null, destroy session: %s', ctx.sessionId);
+                logger.warn('session set to null, destroy session: %s', ctx.sessionId);
                 resetSessionId(ctx, key);
                 return await store.destroy(ctx.sessionId);
             }
-            console.warn('a new session and set to null, ignore destroy');
+            logger.warn('a new session and set to null, ignore destroy');
             return;
         }
 
         // force saving non-empty session
         if (ctx.sessionSave === true) {
-            console.warn('session save forced');
+            logger.warn('session save forced');
             return await saveNow(ctx, ctx.sessionId, session);
         }
 
@@ -273,7 +277,8 @@ export default function session(options: SessionOptions = {}) {
     }
 
     async function saveNow(ctx: Context, sid: string, session: Session) {
-
+        const logger = ctx.logger || console;
+        
         // custom before save hook
         beforeSave(ctx, session);
 
@@ -283,7 +288,7 @@ export default function session(options: SessionOptions = {}) {
             setSessionId(ctx, key, sid, session.cookie);
             // saved
         } catch (err) {
-            console.warn('set session error: ', err.message);
+            logger.warn('set session error: ', err.message);
             errorHandler(err, 'set', ctx);
         }
     }
@@ -306,6 +311,7 @@ export default function session(options: SessionOptions = {}) {
         if (ctx.hasOwnProperty('session')) {
             return await next();
         }
+        const logger = ctx.logger || console;        
         const result = await getSession(ctx);
         if (!result) {
             return await next();
@@ -351,14 +357,14 @@ export default function session(options: SessionOptions = {}) {
         try {
             await next();
         } catch (err) {
-            console.warn('next logic error: %s', err.message);
+            logger.error('next logic error: %s', err.message);
             firstError = err;
         }
         // can't use finally because `refreshSession` is async
         try {
             await refreshSession(ctx, ctx.session, result.originalHash, result.isNew);
         } catch (err) {
-            console.warn('refresh session error: %s', err.message);
+            logger.error('refresh session error: %s', err.message);
             if (firstError) {
                 ctx.app.emit('error', err, ctx);
             }
@@ -387,6 +393,7 @@ export default function session(options: SessionOptions = {}) {
         if (ctx.hasOwnProperty('session')) {
             return await next();
         }
+        const logger = ctx.logger || console;        
         let isNew: boolean = false;
         let originalHash = null;
         let touchSession: boolean = false;

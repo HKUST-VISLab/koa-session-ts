@@ -1,7 +1,7 @@
 import test from 'ava';
 import * as Koa from 'koa';
 import * as request from 'supertest';
-import session, { CONNECT, DISCONNECT, MemoryStore } from '../src';
+import sessionFactory, { CONNECT, DISCONNECT, MemoryStore } from '../src';
 import { uidSync } from '../src/utils';
 
 interface SessionTestContext {
@@ -37,7 +37,7 @@ test('Session Module#use', async (t) => {
         }
         await next();
     });
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_sid',
         reconnectTimeout: 1000,
         cookieOptions: {
@@ -55,7 +55,7 @@ test('Session Module#use', async (t) => {
             return uidSync(len) + (ctx.request.query.test_sid_append || '');
         },
     }));
-    app.use(session({
+    app.use(sessionFactory({
         cookieOptions: {
             path: '/session',
             signed: true,
@@ -210,7 +210,7 @@ test('Session Module#use', async (t) => {
 
 test('Session Module#override', async (t) => {
     const { app } = t.context as SessionTestContext;
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_sid',
         reconnectTimeout: 1000,
         cookieOptions: {
@@ -302,7 +302,7 @@ test('Session Module#override', async (t) => {
 
 test('Session Module#rolling', async (t) => {
     const { app } = t.context as SessionTestContext;
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_sid',
         reconnectTimeout: 1000,
         cookieOptions: {
@@ -354,7 +354,7 @@ test('Session Module#rolling', async (t) => {
 
 test('Session Module#defer', async (t) => {
     const { app } = t.context as SessionTestContext;
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_defer_sid',
         reconnectTimeout: 1000,
         cookieOptions: {
@@ -364,7 +364,7 @@ test('Session Module#defer', async (t) => {
         },
         defer: true,
     }));
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_sid',
         cookieOptions: {
             maxAge: 86400,
@@ -508,7 +508,7 @@ test('Session Module#store', async (t) => {
     const { app } = t.context as SessionTestContext;
     const store = new MemoryStore();
     // config koa app
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_sid',
         reconnectTimeout: 100,
         cookieOptions: {
@@ -623,7 +623,7 @@ test('Session Module#store', async (t) => {
 test('Session Module#store with defer', async (t) => {
     const { app } = t.context as SessionTestContext;
     const store = new MemoryStore();
-    app.use(session({
+    app.use(sessionFactory({
         key: 'koss:test_sid',
         reconnectTimeout: 100,
         cookieOptions: {
@@ -692,7 +692,7 @@ test('Session Module#store with defer', async (t) => {
 
 test('Session Module#Default Options', async (t) => {
     const { app } = t.context as SessionTestContext;
-    app.use(session());
+    app.use(sessionFactory());
     app.use(async (ctx, next) => {
         switch (ctx.request.path) {
             case '/session/get': {
