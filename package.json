@@ -31,7 +31,8 @@
   },
   "homepage": "https://github.com/HKUST-VISLab/koa-session-ts#readme",
   "dependencies": {
-    "@types/koa": "^2.0.40"
+    "@types/koa": "^2.0.40",
+    "uid-ts": "0.0.2"
   },
   "devDependencies": {
     "@types/supertest": "^2.0.2",
@@ -42,7 +43,7 @@
     "standard-version": "^4.2.0",
     "supertest": "^3.0.0",
     "tslint": "^5.5.0",
-    "typescript": "^2.4.2"
+    "typescript": "^2.6.1"
   },
   "peerDependencies": {
     "koa": "^2.3.0"

@@ -1,8 +1,9 @@
 import test from 'ava';
 import * as Koa from 'koa';
 import * as request from 'supertest';
+import { uidSync } from 'uid-ts';
+
 import sessionFactory, { CONNECT, DISCONNECT, MemoryStore } from '../src';
-import { uidSync } from '../src/utils';
 
 interface SessionTestContext {
     app: Koa;

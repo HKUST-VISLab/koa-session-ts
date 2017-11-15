@@ -1,6 +1,7 @@
 import { Context } from 'koa';
+import { uidSync } from 'uid-ts';
 import { BaseStore, CONNECT, DISCONNECT, MemoryStore } from './stores';
-import { crc32, parseurl as parse, uidSync } from './utils';
+import { crc32, parseurl as parse } from './utils';
 
 /** Augmentation of koa */
 declare module 'koa' {
@@ -105,9 +106,9 @@ function generateSession(cookieOptions: Cookie): Session {
 
 /**
  * setup session store with the given `options`
- * 
+ *
  * @export
- * @param {SessionOptions} [options={}] 
+ * @param {SessionOptions} [options={}]
  *   - [`key`] cookie name, defaulting to `koa.sid`
  *   - [`store`] session store instance, default is a MemoryStore
  *   - [`reconnectTimeout`] store reconnectTimeout in `ms`, default is oneday
@@ -120,7 +121,7 @@ function generateSession(cookieOptions: Cookie): Session {
  *   - [`errorHandler`] handler for session store get or set error
  *   - [`valid`] valid(ctx, session), valid session value before use it
  *   - [`beforeSave`] beforeSave(ctx, session), hook before save session
- * @returns 
+ * @returns
  */
 export default function sessionFactory(options: SessionOptions = {}) {
     const {
@@ -186,7 +187,7 @@ export default function sessionFactory(options: SessionOptions = {}) {
             ctx.sessionId = getSessionId(ctx, key, cookieOptions);
         }
 
-        const logger = ctx.logger || console;        
+        const logger = ctx.logger || console;
         let session: Session;
         let isNew = false;
         if (!ctx.sessionId) {
@@ -235,7 +236,7 @@ export default function sessionFactory(options: SessionOptions = {}) {
      */
     async function refreshSession(ctx: Context, session: Session, originalHash, isNew: boolean) {
         const logger = ctx.logger || console;
-        
+
         // reject any session changes, and do not update session expiry
         if (ctx.sessionSave === false) {
             logger.warn('session save disabled');
@@ -279,7 +280,7 @@ export default function sessionFactory(options: SessionOptions = {}) {
 
     async function saveNow(ctx: Context, sid: string, session: Session) {
         const logger = ctx.logger || console;
-        
+
         // custom before save hook
         beforeSave(ctx, session);
 
@@ -312,7 +313,7 @@ export default function sessionFactory(options: SessionOptions = {}) {
         if (ctx.hasOwnProperty('session')) {
             return await next();
         }
-        const logger = ctx.logger || console;        
+        const logger = ctx.logger || console;
         const result = await getSession(ctx);
         if (!result) {
             return await next();
@@ -394,7 +395,7 @@ export default function sessionFactory(options: SessionOptions = {}) {
         if (ctx.hasOwnProperty('session')) {
             return await next();
         }
-        // const logger = ctx.logger || console;        
+        // const logger = ctx.logger || console;
         let isNew: boolean = false;
         let originalHash = null;
         let touchSession: boolean = false;
