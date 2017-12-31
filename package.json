@@ -35,7 +35,11 @@
     "uid-ts": "0.0.3"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/supertest": "^2.0.4",
+=======
+    "@types/supertest": "^2.0.2",
+>>>>>>> 783ec2de16ae444eb8c702341a539e00d5fac752
     "ava": "^0.24.0",
     "koa": "^2.4.1",
     "nyc": "^11.4.1",
