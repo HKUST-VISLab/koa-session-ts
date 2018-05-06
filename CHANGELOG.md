@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/HKUST-VISLab/koa-session-ts/compare/v0.2.2...v0.2.3) (2018-05-06)
+
+
+### Bug Fixes
+
+* **package:** update [@types](https://github.com/types)/node to version 9.6.3 ([ebca0d6](https://github.com/HKUST-VISLab/koa-session-ts/commit/ebca0d6))
+* no need logger type ([83265a3](https://github.com/HKUST-VISLab/koa-session-ts/commit/83265a3))
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/HKUST-VISLab/koa-session-ts/compare/v0.2.1...v0.2.2) (2017-12-31)
 
