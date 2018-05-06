@@ -11,7 +11,7 @@ declare module 'koa' {
         session: Session;
         sessionSave: boolean;
         regenerateSession: () => Session;
-        logger?: any;
+        // logger?: any;
     }
 }
 
