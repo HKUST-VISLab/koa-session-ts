@@ -32,7 +32,7 @@
   "homepage": "https://github.com/HKUST-VISLab/koa-session-ts#readme",
   "dependencies": {
     "@types/koa": "^2.0.45",
-    "@types/node": "^10.0.3",
+    "@types/node": "^10.12.9",
     "uid-ts": "0.0.3"
   },
   "devDependencies": {
